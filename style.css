@@ -1,0 +1,267 @@
+/* ============================================================
+   SÜMOLOJİ - tasarım
+   Üç tema: gündüz (lila-pembe-mavi), akşam (gün batımı), gece
+   Tema, <body data-faz="..."> ile otomatik değişir.
+   ============================================================ */
+
+/* ---------- GÜNDÜZ (varsayılan) ---------- */
+:root,
+[data-faz="gunduz"] {
+  --bg: linear-gradient(135deg, #e8dcff 0%, #ffd9ec 45%, #cfe9ff 100%);
+  --yazi: #4a3a6b;
+  --yazi-soluk: #6c5a8e;
+  --cam: rgba(255, 255, 255, 0.62);
+  --kenar: rgba(255, 255, 255, 0.8);
+  --golge: rgba(143, 111, 214, 0.18);
+  --quote: linear-gradient(120deg, #c9b6f2, #ffc2e0);
+  --quote-yazi: #3d2d5e;
+  --chip: rgba(255, 255, 255, 0.75);
+  --chip-kenar: rgba(201, 182, 242, 0.7);
+  --adv1: linear-gradient(160deg, #f0e6ff, #ffe3f1);
+  --adv2: linear-gradient(160deg, #ffe3f1, #e0f0ff);
+  --adv3: linear-gradient(160deg, #e0f0ff, #f0e6ff);
+  --adv4: linear-gradient(160deg, #fff0e0, #ffe3f1);
+  --adv-kenar: rgba(255, 255, 255, 0.85);
+  --day: rgba(255, 255, 255, 0.7);
+  --day-aktif: linear-gradient(160deg, #f3eaff, #ffe8f4);
+  --aktif-kenar: #8f6fd6;
+  --sicak: #e46fae;
+  --soguk: #5aa7e6;
+  --btn: linear-gradient(120deg, #8f6fd6, #e46fae);
+  --blob1: #b79df0;
+  --blob2: #ff9fcf;
+  --hata: #b3366f;
+}
+
+/* ---------- AKŞAM (gün batımı) ---------- */
+[data-faz="aksam"] {
+  --bg: linear-gradient(160deg, #ffd9c7 0%, #ffbfd3 42%, #c9a8ff 100%);
+  --yazi: #5a3350;
+  --yazi-soluk: #7d4f70;
+  --cam: rgba(255, 247, 242, 0.6);
+  --kenar: rgba(255, 255, 255, 0.75);
+  --golge: rgba(217, 95, 168, 0.2);
+  --quote: linear-gradient(120deg, #ffb88c, #ff9ec4);
+  --quote-yazi: #4a2440;
+  --chip: rgba(255, 255, 255, 0.7);
+  --chip-kenar: rgba(255, 170, 140, 0.6);
+  --adv1: linear-gradient(160deg, #fff0e6, #ffe0ee);
+  --adv2: linear-gradient(160deg, #ffe0ee, #efe3ff);
+  --adv3: linear-gradient(160deg, #efe3ff, #ffeadb);
+  --adv4: linear-gradient(160deg, #ffeadb, #ffe0ee);
+  --adv-kenar: rgba(255, 255, 255, 0.8);
+  --day: rgba(255, 255, 255, 0.66);
+  --day-aktif: linear-gradient(160deg, #fff0e6, #ffe0ee);
+  --aktif-kenar: #e8788f;
+  --sicak: #e8588a;
+  --soguk: #7a6fd6;
+  --btn: linear-gradient(120deg, #ff8f6b, #d95fa8);
+  --blob1: #ffb27a;
+  --blob2: #c58bff;
+  --hata: #a02a5e;
+}
+
+/* ---------- GECE ---------- */
+[data-faz="gece"] {
+  --bg: linear-gradient(160deg, #141033 0%, #241a52 50%, #3a2466 100%);
+  --yazi: #f1e9ff;
+  --yazi-soluk: #cdbff0;
+  --cam: rgba(40, 30, 90, 0.55);
+  --kenar: rgba(180, 160, 255, 0.28);
+  --golge: rgba(0, 0, 0, 0.38);
+  --quote: linear-gradient(120deg, #6a4bc9, #b64fa5);
+  --quote-yazi: #ffffff;
+  --chip: rgba(255, 255, 255, 0.1);
+  --chip-kenar: rgba(190, 170, 255, 0.38);
+  --adv1: linear-gradient(160deg, rgba(120, 90, 220, 0.38), rgba(200, 90, 170, 0.26));
+  --adv2: linear-gradient(160deg, rgba(200, 90, 170, 0.28), rgba(90, 140, 230, 0.3));
+  --adv3: linear-gradient(160deg, rgba(90, 140, 230, 0.3), rgba(120, 90, 220, 0.38));
+  --adv4: linear-gradient(160deg, rgba(230, 150, 110, 0.28), rgba(200, 90, 170, 0.28));
+  --adv-kenar: rgba(190, 170, 255, 0.28);
+  --day: rgba(255, 255, 255, 0.08);
+  --day-aktif: linear-gradient(160deg, rgba(130, 100, 230, 0.5), rgba(210, 100, 180, 0.38));
+  --aktif-kenar: #c7b0ff;
+  --sicak: #ff8fc5;
+  --soguk: #8ec9ff;
+  --btn: linear-gradient(120deg, #7b5ce0, #d65fb0);
+  --blob1: #5b3fc4;
+  --blob2: #a23fa0;
+  --hata: #ff9ab8;
+}
+
+/* ============================================================ */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { background: var(--bg); min-height: 100%; }
+
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  color: var(--yazi);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  transition: color .6s ease;
+}
+
+/* Yumuşak renkli lekeler */
+body::before, body::after {
+  content: ""; position: fixed; border-radius: 50%; filter: blur(80px);
+  z-index: 0; opacity: .55; pointer-events: none; transition: background .8s ease;
+}
+body::before { width: 340px; height: 340px; background: var(--blob1); top: -80px; left: -80px; }
+body::after  { width: 380px; height: 380px; background: var(--blob2); bottom: -100px; right: -100px; }
+
+/* ---------- Gökyüzü: güneş, ay, yıldız ---------- */
+.gok { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+
+.gok::before {            /* güneş / ay */
+  content: ""; position: absolute; border-radius: 50%;
+  transition: all 1s ease; opacity: 0;
+}
+body[data-faz="gunduz"] .gok::before {
+  width: 170px; height: 170px; top: -50px; right: 6%;
+  background: radial-gradient(circle, #fff7c2 0%, rgba(255, 235, 150, .75) 38%, rgba(255, 235, 150, 0) 70%);
+  opacity: .85;
+}
+body[data-faz="aksam"] .gok::before {
+  width: 320px; height: 320px; bottom: -120px; left: 50%; margin-left: -160px;
+  background: radial-gradient(circle, #fff0b8 0%, rgba(255, 150, 90, .7) 40%, rgba(255, 120, 150, 0) 72%);
+  opacity: .9;
+}
+body[data-faz="gece"] .gok::before {
+  width: 74px; height: 74px; top: 42px; right: 9%;
+  background: radial-gradient(circle at 35% 35%, #fffdf2, #e9e2ff 70%);
+  box-shadow: 0 0 40px 12px rgba(220, 210, 255, .35);
+  opacity: 1;
+}
+
+.gok::after {             /* bulutlu / yağmurlu havada hafif gri örtü */
+  content: ""; position: absolute; inset: 0; background: rgba(110, 120, 150, 0);
+  transition: background 1s ease;
+}
+body[data-hava="bulut"] .gok::after   { background: rgba(120, 130, 165, .10); }
+body[data-hava="yagmur"] .gok::after  { background: rgba(95, 110, 150, .20); }
+body[data-hava="kar"] .gok::after     { background: rgba(190, 205, 235, .18); }
+body[data-faz="gece"][data-hava="yagmur"] .gok::after { background: rgba(10, 10, 40, .25); }
+
+.yildiz {
+  position: absolute; background: #fff; border-radius: 50%;
+  animation: parilti 3s ease-in-out infinite;
+}
+@keyframes parilti { 0%, 100% { opacity: .15; transform: scale(.8); } 50% { opacity: 1; transform: scale(1.15); } }
+
+/* ---------- Efekt tuvali ---------- */
+#efekt { position: fixed; inset: 0; z-index: 3; pointer-events: none; }
+
+/* ---------- Sayfa ---------- */
+.wrap { position: relative; z-index: 2; max-width: 880px; margin: 0 auto; padding: 22px 16px 40px; }
+
+header { text-align: center; margin-bottom: 18px; }
+header h1 { font-size: 1.9rem; letter-spacing: .5px; }
+header p { font-size: .95rem; opacity: .8; margin-top: 4px; }
+
+.tema-sec { display: inline-flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-top: 12px; }
+.tema-sec button {
+  border: 1.5px solid var(--chip-kenar); background: var(--chip); color: var(--yazi);
+  padding: 6px 12px; border-radius: 999px; font-size: .8rem; cursor: pointer;
+  transition: transform .15s, background .2s;
+}
+.tema-sec button:hover { transform: translateY(-2px); }
+.tema-sec button.aktif { background: var(--btn); color: #fff; border-color: transparent; }
+
+.card {
+  background: var(--cam);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1.5px solid var(--kenar);
+  border-radius: 26px;
+  box-shadow: 0 10px 30px var(--golge);
+  padding: 20px;
+  margin-bottom: 18px;
+  transition: background .6s ease, border-color .6s ease;
+}
+.card[hidden] { display: none; }
+
+/* ---------- Ana kutu: cümle + hava ---------- */
+.quote {
+  background: var(--quote);
+  border-radius: 20px;
+  padding: 16px 18px;
+  text-align: center;
+  margin-bottom: 18px;
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .5);
+}
+.quote small { display: block; font-size: .76rem; letter-spacing: 1px; text-transform: uppercase; opacity: .85; margin-bottom: 6px; color: var(--quote-yazi); }
+.quote p { font-size: 1.12rem; font-weight: 600; line-height: 1.45; color: var(--quote-yazi); }
+.quote .ozguven {
+  margin-top: 12px; padding-top: 12px; border-top: 1.5px dashed rgba(255, 255, 255, .55);
+  font-size: 1rem; font-weight: 500;
+}
+
+.now { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; justify-content: center; }
+.now .icon { font-size: 4.2rem; line-height: 1; }
+.now .temp { font-size: 3rem; font-weight: 700; line-height: 1; }
+.now .desc { font-size: 1.05rem; margin-top: 4px; opacity: .9; }
+.now .dayname { font-size: .85rem; opacity: .75; }
+
+.chips { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 16px; }
+.chip {
+  background: var(--chip); border-radius: 999px; padding: 8px 14px; font-size: .9rem;
+  border: 1.5px solid var(--chip-kenar);
+}
+
+/* ---------- Ne giysem ---------- */
+.card h2 { font-size: 1.15rem; margin-bottom: 12px; }
+.card h2 .hint { font-weight: 400; font-size: .8rem; opacity: .7; }
+
+.advice-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
+.advice {
+  border-radius: 20px; padding: 14px 16px; font-size: .95rem; line-height: 1.5;
+  border: 1.5px solid var(--adv-kenar);
+}
+.advice b { display: block; margin-bottom: 4px; font-size: 1rem; }
+.advice.hair   { background: var(--adv1); }
+.advice.outfit { background: var(--adv2); }
+.advice.shoes  { background: var(--adv3); }
+.advice.bag    { background: var(--adv4); }
+
+/* ---------- Haftalık ---------- */
+.week { display: grid; grid-template-columns: repeat(auto-fit, minmax(105px, 1fr)); gap: 10px; }
+.day {
+  cursor: pointer; text-align: center; padding: 12px 6px; border-radius: 20px;
+  background: var(--day); border: 2px solid transparent;
+  transition: transform .15s, box-shadow .15s, border-color .15s;
+}
+.day:hover { transform: translateY(-3px); box-shadow: 0 8px 18px var(--golge); }
+.day.active { border-color: var(--aktif-kenar); background: var(--day-aktif); box-shadow: 0 8px 20px var(--golge); }
+.day .n { font-weight: 600; font-size: .88rem; }
+.day .d { font-size: .72rem; opacity: .7; }
+.day .i { font-size: 1.9rem; margin: 6px 0; }
+.day .t { font-size: .9rem; }
+.day .t b { color: var(--sicak); }
+.day .t span { color: var(--soguk); }
+.day .r { font-size: .72rem; opacity: .8; margin-top: 3px; }
+
+.foot { text-align: center; font-size: .8rem; margin-top: 10px; }
+.foot #updated { opacity: .8; }
+.source-note { opacity: .65; font-size: .72rem; margin-top: 2px; }
+button.refresh {
+  margin-top: 8px; border: none; padding: 8px 18px; border-radius: 999px; cursor: pointer;
+  background: var(--btn); color: #fff; font-size: .85rem;
+}
+
+.loading, .error { text-align: center; padding: 30px 10px; }
+.error { color: var(--hata); }
+
+@media (max-width: 480px) {
+  body[data-faz="gece"] .gok::before { width: 44px; height: 44px; top: 12px; right: 12px; box-shadow: 0 0 24px 8px rgba(220, 210, 255, .3); }
+  body[data-faz="gunduz"] .gok::before { width: 120px; height: 120px; top: -40px; right: -10px; }
+  header h1 { font-size: 1.6rem; }
+  .now .temp { font-size: 2.6rem; }
+  .card { padding: 16px; border-radius: 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .yildiz { animation: none; opacity: .7; }
+}

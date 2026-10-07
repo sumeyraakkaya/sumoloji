@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sümoloji</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-faz="gunduz" data-hava="acik">
+
+<!-- Gökyüzü süsleri: güneş, ay, yıldızlar -->
+<div class="gok" id="gok" aria-hidden="true"></div>
+<!-- Yağmur damlaları ve kar taneleri burada çizilir -->
+<canvas id="efekt" aria-hidden="true"></canvas>
+
+<div class="wrap">
+
+  <header>
+    <h1>🌸 Sümoloji</h1>
+    <p>Hayatını kolaylaştıracak tahminler ✨</p>
+    <div class="tema-sec" role="group" aria-label="Tema seç">
+      <button type="button" data-tema="oto" class="aktif">🪄 Otomatik</button>
+      <button type="button" data-tema="gunduz">☀️ Gündüz</button>
+      <button type="button" data-tema="aksam">🌇 Akşam</button>
+      <button type="button" data-tema="gece">🌙 Gece</button>
+    </div>
+  </header>
+
+  <!-- ANA KUTU: günün cümlesi + seçili günün havası -->
+  <section class="card" id="main">
+    <div class="loading">⏳ Hava durumu yükleniyor...</div>
+  </section>
+
+  <!-- NE GİYSEM -->
+  <section class="card" id="adviceCard" hidden>
+    <h2>👗 Ne Giysem?</h2>
+    <div class="advice-grid" id="adviceGrid"></div>
+  </section>
+
+  <!-- HAFTALIK TAHMİN -->
+  <section class="card" id="weekCard" hidden>
+    <h2><span id="weekTitle">📅 Haftalık Tahmin</span> <span class="hint">(bir güne tıkla)</span></h2>
+    <div class="week" id="week"></div>
+    <div class="foot">
+      <div id="updated"></div>
+      <div id="sourceNote" class="source-note"></div>
+      <button class="refresh" id="refreshBtn" type="button">🔄 Yenile</button>
+    </div>
+  </section>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
